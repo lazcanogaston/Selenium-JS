@@ -1,0 +1,15 @@
+to initialize the js project, in the project folder: npm init
+
+with npm we install all the dependencies we need for the project. 
+they are not installed globally if not inside each folder
+
+for running js file :
+in the correct path -> node nameOfFile.js 
+for running TESTS: 
+in the project's root folder:
+npm test .\test\test_google_search.js
+
+
+
+SELENIUM JS DOC:
+https://www.selenium.dev/selenium/docs/api/javascript/module/selenium-webdriver/index_exports_WebDriver.html
