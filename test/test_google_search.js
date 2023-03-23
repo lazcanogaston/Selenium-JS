@@ -4,6 +4,7 @@ const {By, Key, Builder, until} = require('selenium-webdriver')
 var webdriver = require('selenium-webdriver')
 require('chromedriver')
 const GoogleHomePage = require('..\\pages\\googleHomePage')
+var assert = require('assert');
 
 describe("Testing Google search bar functionality", function(){
     this.timeout(50000)
@@ -31,9 +32,11 @@ describe("Testing Google search bar functionality", function(){
             await googleHomePage.getTitle().then(function(title){
                 if(title.includes(text)){
                     console.log("The title is the expected.")
+                    assert(true)
                 }
                 else{
                     console.log("The title is not the expected.")
+                    assert(false) 
                 }
             })
             console.log("test finished.")
