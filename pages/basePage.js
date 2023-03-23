@@ -3,21 +3,21 @@ const {By, Key, Builder} = require('selenium-webdriver') // this are the "import
 var webdriver = require('selenium-webdriver')
 require('chromedriver')
 //global variable
-var driver = new webdriver.Builder().forBrowser('chrome').build()
+//var driver = new webdriver.Builder().forBrowser('chrome').build()
 
-//implicit wait
-driver.manage().setTimeouts({implicit: (10000)})
+
 
 class BasePage{
-    constructor(){
-        global.driver = driver //it is not necessary to pass the driver instance as a parameter because it is globally initialized in line 6
+    constructor(driver){
+        this.driver = driver //it is not necessary to pass the driver instance as a parameter because it is globally initialized in line 6
+        this.driver.manage().setTimeouts( { implicit: 15000 } );
     }
     getUrl(url){
-        driver.get(url)
+        this.driver.get(url)
     }
     findElement(locator){
-        console.log("find element passed")
-        return driver.findElement(By.xpath, locator)
+        //console.log("find element passed")
+        return this.driver.findElement(By.xpath(locator))
     }
 
     sendKeys(locator, text){
@@ -26,7 +26,7 @@ class BasePage{
     }
 
     getTitle(){
-        return driver.getTitle()
+        return this.driver.getTitle()
     }
 }
 

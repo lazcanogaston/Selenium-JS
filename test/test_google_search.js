@@ -1,41 +1,45 @@
 
 //imports
 const {By, Key, Builder, until} = require('selenium-webdriver')
+var webdriver = require('selenium-webdriver')
 require('chromedriver')
-const googleHomePage = require('..\\pages\\googleHomePage') //it returns the INSTANCE of google home page (I declare it in the googleHomePage last line)
-
+const GoogleHomePage = require('..\\pages\\googleHomePage')
 
 describe("Testing Google search bar functionality", function(){
     this.timeout(50000)
-    beforeEach(function(){
+    let driver
+    beforeEach(async function(){
         //init driver
-        //let driver = new Builder().forBrowser('chrome').build()
+        driver = await new Builder().forBrowser('chrome').build()
+        
     })
-    this.afterEach(function(){
-        //tear down
-        setInterval(function(){  ///IMPLICIT WAIT (always 5 seconds (5000 ms))
-            driver.quit(), 5000
+    this.afterEach(async function(){
+        //tear down   
+         driver.quit()  
+    })
+    var parametrized = ["hola", "chau"] 
+   // parametrized.forEach(function(text){
+    for (const text of parametrized){
+        it("POM TEST", async function(){
+            console.log("test started")
+            //var text= "hola"
+            var googleHomePage = new GoogleHomePage(driver)
+            googleHomePage.getUrl('https://www.google.com')
+            googleHomePage.enter_search(text)
+            await driver.wait(until.titleContains(text), 1000)
+            console.log("content searched correctly.")
+            await googleHomePage.getTitle().then(function(title){
+                if(title.includes(text)){
+                    console.log("The title is the expected.")
+                }
+                else{
+                    console.log("The title is not the expected.")
+                }
+            })
+            console.log("test finished.")
         })
-    })
-    it("POM TEST", async function(){
-        console.log("test started")
-        var text= "hola"
-        googleHomePage.getUrl('https://www.google.com')
-        googleHomePage.enter_search(text)
-        await driver.wait(until.titleIs(text), 1000)
-        console.log("content searched correctly.")
-        await googleHomePage.getTitle().then(function(title){
-            if(title.includes('hola')){
-                console.log("The title is the expected.")
-            }
-            else{
-                console.log("The title is not the expected.")
-            }
-        })
-        console.log("test finished.")
-    })
+    }
 })
-
 
 // //IMPORTS
 // const {By, Key, Builder} = require('selenium-webdriver') // this are the "imported modules" from selenium- webdriver library
